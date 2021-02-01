@@ -17,7 +17,7 @@ from Classes.leap_class import LeapSubscriber
 
 
 
-IMU = IMUsubscriber()
+#IMU = IMUsubscriber()
 Leap = LeapSubscriber()
 
 
