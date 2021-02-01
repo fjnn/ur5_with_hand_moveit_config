@@ -16,7 +16,7 @@ class LeapSubscriber:
     def __init__(self, hand="left", rate=100):
         """Initializes the IMU data recording node.
         TODO: give option to chose hand left or right"""
-        rospy.init_node("leap_subscriber")  # Find a way to get rid of this from here
+#        rospy.init_node("leap_subscriber")  # Find a way to get rid of this from here
         self.r = rospy.Rate(rate)
         self.grab_strength = Float32()
         print "Leap created"
@@ -35,5 +35,4 @@ class LeapSubscriber:
 #            print "no hand detected"
     
     def update(self):
-#        self.grab_strength.stamp = rospy.Time.now()
         self.pub.publish(self.grab_strength)

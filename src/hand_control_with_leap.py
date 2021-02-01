@@ -35,6 +35,36 @@ def movegroup_init():
     plan_arm = arm_group.go()  
     
 
+def task_space_map():
+    """
+    Here I will use predefined poses for robot to move.
+    Move group will be used like that:
+        
+#        hand_group.set_named_target("handOpen")
+#        plan_hand = hand_group.go()  
+#        arm_group.set_named_target("home")
+#        plan_arm = arm_group.go()  
+ 
+    """
+    pass
+
+
+def rt_ee_mapping():
+    """
+    Not predefined poses in move group
+    Real time hand position w.r.t torso will be mapped ee position w.r.t /base_link
+    """
+    pass
+
+
+def rt_joints_mapping():
+    """
+    IMU readings will be mapped real time.
+    Not move groups but action-server clients will be used
+    """
+    pass
+    
+
 
 def main():
     global hand_group, arm_group
