@@ -29,10 +29,10 @@ class LeapSubscriber:
     def callback_leap(self, hand_msg):  # callback for gripper message
         self.hand_msg = hand_msg
         if hand_msg.left_hand.is_present:
-            self.grab_strenght = self.hand_msg.left_hand.grab_strength
-            print "grab_strength:", self.grab_strenght
-        else:
-            print "no hand detected"
+            self.grab_strength.data = self.hand_msg.left_hand.grab_strength
+#            print "grab_strength:", self.grab_strenght
+#        else:
+#            print "no hand detected"
     
     def update(self):
 #        self.grab_strength.stamp = rospy.Time.now()
