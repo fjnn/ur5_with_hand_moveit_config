@@ -1,5 +1,9 @@
 #! /usr/bin/env python
 
+"""
+It looks like I will use move_groups for EE mapping and action server for joint space mapping
+"""
+
 import sys
 import time
 
@@ -9,9 +13,14 @@ import geometry_msgs.msg
 from sensor_msgs.msg import JointState
 
 from Classes.IMU_class_full_arm import IMUsubscriber
+from Classes.leap_class import LeapSubscriber
+
 
 
 IMU = IMUsubscriber()
+Leap = LeapSubscriber()
+
+sys.exit("done")
 
 
 def movegroup_init():

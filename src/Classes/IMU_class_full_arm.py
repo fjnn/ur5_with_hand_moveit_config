@@ -77,7 +77,7 @@ class IMUsubscriber:
 #        self.log_start_time = rospy.get_time()
         self.runflag = True
 #        _ROSTIME_START = rospy.get_time()
-        print "Initialized"
+        print "IMUs Initialized"
 
     def update(self):
         # print self.calibration_flag
