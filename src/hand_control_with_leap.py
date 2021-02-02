@@ -2,6 +2,7 @@
 
 """
 It looks like I will use move_groups for EE mapping and action server for joint space mapping
+TODO: This whole thing can be written in classes. My_Move_Groups(). Don't overcode yet :D
 """
 
 import sys
@@ -18,21 +19,21 @@ from Classes.leap_class import LeapSubscriber
 
 
 #IMU = IMUsubscriber()
-Leap = LeapSubscriber()
+#Leap = LeapSubscriber()
 
 
 def movegroup_init():
-    global hand_group, arm_group
     moveit_commander.roscpp_initialize(sys.argv)
 #    rospy.init_node("hand_control_with_leap_node", anonymous=False)
     robot = moveit_commander.RobotCommander()
     
     hand_group = moveit_commander.MoveGroupCommander("hand")
     arm_group = moveit_commander.MoveGroupCommander("arm")
-    hand_group.set_named_target("handClosed")
+    hand_group.set_named_target("handOpen")
     plan_hand = hand_group.go()  
-    arm_group.set_named_target("bend1")
+    arm_group.set_named_target("home")
     plan_arm = arm_group.go()  
+    return hand_group, arm_group
     
 
 def task_space_map():
@@ -57,29 +58,45 @@ def rt_ee_mapping():
     pass
 
 
-def rt_joints_mapping():
+def rt_joints_mapping(hand_group, arm_group):
     """
     IMU readings will be mapped real time.
     Not move groups but action-server clients will be used
     """
-    pass
+    arm_group.clear_pose_targets()
+    hand_group.clear_pose_targets()
+    
+    arm_group_variable_values = arm_group.get_current_joint_values()
+    print "============ Arm joint values: ", arm_group_variable_values
+    hand_group_variable_values = hand_group.get_current_joint_values()
+    print "============ Hand joint values: ", hand_group_variable_values
+    print "click Enter to continue"
+    dummy_input = raw_input()
+    arm_group_variable_values[4] = 1.0
+    arm_group.set_joint_value_target(arm_group_variable_values)
+    
+    plan = arm_group.plan()
+    plan_arm = arm_group.go()  
+    
+    dummy_input = raw_input()
     
 
 
 def main():
-    global hand_group, arm_group
     try:
-#        movegroup_init()
+        hand_group, arm_group = movegroup_init()
 #        rospy.sleep(5)
+        rt_joints_mapping(hand_group, arm_group)
+        sys.exit("done")
 #        IMU.init_subscribers_and_publishers()
 #        
 #        hand_group.set_named_target("handOpen")
 #        plan_hand = hand_group.go()  
 #        arm_group.set_named_target("home")
 #        plan_arm = arm_group.go()  
-        Leap.init_subscribers_and_publishers()
+#        Leap.init_subscribers_and_publishers()
         
-        while not rospy.is_shutdown():
+#        while not rospy.is_shutdown():
 #            now = time.time()
 #            prev = 0
 #            # print "++++", index
@@ -89,8 +106,8 @@ def main():
 #            IMU.update()
 #            IMU.r.sleep()
 #            prev = now
-            Leap.update()
-            Leap.r.sleep()
+#            Leap.update()
+#            Leap.r.sleep()
 
     except KeyboardInterrupt:
         moveit_commander.roscpp_shutdown()
