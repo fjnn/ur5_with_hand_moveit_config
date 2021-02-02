@@ -67,7 +67,10 @@ def joint_names_to_numbers(argument):
     switcher = { 
         "shoulder_pan": 0, 
         "shoulder_lift": 1,
+        "elbow": 2,
+        "wrist_1": 3,
         "wrist_2": 4,
+        "wrist_3": 5,
     } 
   
     # get() method of dictionary data type returns  
@@ -98,11 +101,8 @@ def joint_space_control(hand_group, arm_group, **kwargs):
     for joint,value in kwargs.items():
         joint_int = joint_names_to_numbers(joint)
         joint_val = value
-    print joint_int, joint_val
-    print "click Enter to continue"
-    dummy_input = raw_input()
-    arm_group_variable_values[joint_int] = joint_val
-    arm_group.set_joint_value_target(arm_group_variable_values)
+        arm_group_variable_values[joint_int] = joint_val
+        arm_group.set_joint_value_target(arm_group_variable_values)
     plan_arm = arm_group.go() 
     
 def rt_joints_mapping(hand_group, arm_group):
@@ -132,7 +132,7 @@ def main():
     try:
         hand_group, arm_group = movegroup_init()
 #        rospy.sleep(5)
-        joint_space_control(hand_group, arm_group, wrist_2=1.0)
+        joint_space_control(hand_group, arm_group, wrist_2=1.0, wrist_1=1.0)
 #        rt_joints_mapping(hand_group, arm_group)
         sys.exit("done")
 #        IMU.init_subscribers_and_publishers()
