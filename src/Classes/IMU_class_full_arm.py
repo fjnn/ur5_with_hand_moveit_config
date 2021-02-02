@@ -160,3 +160,6 @@ class IMUsubscriber:
         self.human_joint_imu.position[6] = self.wrist_angles[0]  # pitch
         self.human_joint_imu.position[7] = self.wrist_angles[1]  # yaw
         self.human_joint_imu.position[8] = self.wrist_angles[2]  # roll
+        
+    def calculate_hand_pos(self, ref_link):
+        self.

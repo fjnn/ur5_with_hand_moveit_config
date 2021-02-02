@@ -21,6 +21,7 @@ from Classes.leap_class import LeapSubscriber
 
 #IMU = IMUsubscriber()
 #Leap = LeapSubscriber()
+#TODO: initiate human model
 
 
 def movegroup_init():
