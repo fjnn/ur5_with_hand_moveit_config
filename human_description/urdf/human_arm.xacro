@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--URDF consist of two main parts: visual and inertial. In here I have only visual part -->
+
+<robot name="mrm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="1 1 1"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="base_link__link_01" type="revolute">
+    <axis xyz="1 0 0"/> <!-- rotate around z-axis-->
+    <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 0.5"/>  <!-- half of the height of the box 0.5-->
+    <parent link="base_link"/>
+    <child link="link_01"/>
+  </joint>
+
+  <link name="link_01">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.2"/>
+      <geometry>
+        <cylinder radius="0.35" length="0.4"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="link_01__link_02" type="revolute">
+    <axis xyz="1 0 0"/> <!-- rotate around z-axis-->
+    <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 0.4"/>  <!-- half of the height of the box 0.5-->
+    <parent link="link_01"/>
+    <child link="link_02"/>
+  </joint>
+
+  <link name="link_02">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0.2"/>
+      <geometry>
+        <cylinder radius="0.15" length="0.4"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="link_02__gripper_a" type="prismatic">
+    <axis xyz="1 0 0"/> <!-- move around z-axis-->
+    <limit effort="1000.0" lower="0" upper="1.0" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 0.4"/>  <!-- half of the height of the box 0.5-->
+    <parent link="link_02"/>
+    <child link="gripper_a"/>
+  </joint>
+
+  <joint name="link_02__gripper_b" type="prismatic">
+    <axis xyz="-1 0 0"/> <!-- move around z-axis-->
+    <limit effort="1000.0" lower="0" upper="1.0" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 0.4"/>  <!-- half of the height of the box 0.5-->
+    <parent link="link_02"/>
+    <child link="gripper_b"/>
+  </joint>
+
+  <link name="gripper_a">
+    <visual>
+      <origin rpy="0 0 0" xyz="0.1 0 0.3"/>
+      <geometry>
+        <box size="0.2 0.2 0.6"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="gripper_b">
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.1 0 0.3"/>
+      <geometry>
+        <box size="0.2 0.2 0.6"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>
